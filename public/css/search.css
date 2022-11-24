@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Rancho');
+
+:root {
+    --primary: #ebebeb;
+    --accent: #ff6700;
+    --subtle: #c0c0c0;
+    --text-primary: black;
+    --text-accent: #004e98;
+    --text-subtle: #3a6ea5;
+    --text-link: #E85A4F;
+    --border-color: rgb(214, 214, 214);
+    --title-font: 'Rancho', sans-serif;
+    --secondary-font: 'Anton', sans-serif;
+    --third-font: 'Noto Sans', sans-serif;
+    --fourth-font: 'Rancho', sans-serif;
+}
+
+
+hr {
+    width: 100%;
+}
+
+.posts-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(45deg, transparent 20%, var(--accent) 25%, transparent 25%),
+        linear-gradient(-45deg, transparent 20%, var(--accent) 25%, transparent 25%),
+        linear-gradient(-45deg, transparent 75%, var(--accent) 80%, transparent 0),
+        radial-gradient(var(--subtle) 2px, transparent 0);
+    background-size: 30px 30px, 30px 30px;
+    width: 100%;
+    min-height: 50rem;
+}
+
+
+.posts-categories {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-self: flex-start;
+    padding: 2rem 0 2rem 3rem;
+    width: 100%;
+    background-color: var(--text-accent);
+    border-top-left-radius: 3%;
+    border-top-right-radius: 3%;
+    color: var(--primary);
+    font-family: var(--third-font);
+}
+
+.posts-categories>a {
+    color: var(--primary);
+    transition: all 0.2s;
+}
+
+.posts-categories>a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.posts-category-title {
+    font-size: 1.8rem;
+    margin-right: 6rem;
+    text-transform: uppercase;
+    font-family: var(--fourth-font);
+}
+
+.posts-category-item {
+    font-size: 1.5rem;
+    margin-left: 2rem;
+    margin-right: 3.5rem;
+}
+
+.search-query {
+    margin: 3rem 0 1rem 2rem;
+    font-size: 2rem;
+    align-self: flex-start;
+}
+
+.posts-box {
+    width: 80%;
+    min-height: 30rem;
+    background-color: var(--primary);
+    border-radius: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5rem 0;
+    box-shadow: 5px 15px 15px var(--subtle);
+}
+
+.post-card {
+    width: 99%;
+    height: 20rem;
+    transition: all 0.3s;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+}
+
+.post-card:hover {
+    background-color: rgba(192, 192, 192, 0.5);
+    box-shadow: 5px 5px 5px var(--subtle);
+}
+
+.post-card a {
+    color: black;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.post-card a:hover {
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.cardHeader {
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-right: 1rem;
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+.date-line {
+    padding-left: 2rem;
+    font-size: 0.9rem;
+}
+
+.cardContent {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.cardText {
+    flex-direction: column;
+}
+
+.cardDesc {
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}

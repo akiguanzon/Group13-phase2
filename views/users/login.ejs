@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" media="all" href="/css/log-in.css">
+    <title>Social-net | Log In</title>
+</head>
+
+<body>
+    <div class="logoBox">
+        <img src="https://github.com/akiguanzon/Group13_MP/blob/main/images/logo.png?raw=true" id="logo"
+            class="rotating">
+        <div id="website-name">
+            social-net
+        </div>
+        <div id="slogan">
+            Find your everyday reads here!
+        </div>
+    </div>
+    <div class="loginBox">
+        <p class="greetings">Welcome to social-net!</p>
+        <hr>
+        <form action="/user">
+            <div class="fields">
+                <label>Username<input type="text" name="username" placeholder="Username" required></label>
+                <label>Password<input type="password" name="password" placeholder="Password" id="password"
+                        required></label>
+                <label class="misc"><input type="checkbox" onclick="viewPassword()">Show password</label>
+                <p class="misc2"><a href="forgotpassword.html" target="_blank">Forgot password?</a></p>
+            </div>
+            <div class="sub-container">
+                <p class="misc">
+                    <%= message %>
+                </p>
+            </div>
+            <div class="sub-container">
+                <input type="submit" class="button">
+                <p class="misc">Don't have an account? <a href="/signup" target="_blank">Sign Up!</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social-net | Submit an article!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/post.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container text-center" id="header">
+        <div class="row">
+            <div class="user">
+                <a href="../login-signup-forgotpassword/login.html">
+                    <div class="user-button">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                        </svg>
+                        <p class="username">User</p>
+
+                    </div>
+
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="header-title">social-net</h1>
+                <h2 class="header-slogan">Find your everyday reads here!</h2>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/navbar') %>
+
+        <div class="signupBox">
+            <p class="greetings">Found something interesting? Submit an article for a chance to be featured!</p>
+            <hr>
+            <p class="misc">Please fill in information to complete submission.</p>
+            <form action="/post/<%= post._id  %>?_method=patch" method="post">
+                <div class="mb-3">
+                    <label for="category">Category</label>
+                    <select class="form-select" name="category" id="category">
+                        <% for(let category of categories) {%>
+                            <option value="<%= category %>" <%=post.category===category ? 'selected' : '' %> >
+                                <%= category %>
+                            </option>
+                            <% } %>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="misc">Title</label>
+                    <input type="text" class="form-control" placeholder="Article title" name="title" id="title"
+                        value="<%= post.title %>">
+                </div>
+                <div mb-3">
+                    <label for="url" class="misc">URL</label>
+                    <input type="text" class="form-control" placeholder="URL" name="url" id="url"
+                        value="<%= post.url  %>">
+                </div>
+                <div mb-3">
+                    <label for="imgSrc">Image Source</label>
+                    <input type="text" class="form-control" placeholder="imageURL" name="imgSrc" id="imgSrc"
+                        value="<%= post.imgSrc %>">
+                </div>
+                <div class="mb-3">
+                    <label for="content">Description</label>
+                    <textarea class="form-control" rows="3" placeholder="Short description" id="content"
+                        name="content"><%= post.content  %> </textarea>
+                </div>
+                <div class="sub-container">
+                    <input type="submit" name="submitButton" value="Submit" class="button">
+                </div>
+            </form>
+        </div>
+
+        <%- include('../partials/footer') %>
+
+            <script src="https://unpkg.com/scrollreveal"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+                crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social-net | Featured</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/search.css">
+</head>
+
+<body>
+    <div class="container text-center" id="header">
+        <div class="row">
+            <div class="user">
+                <a href="../login-signup-forgotpassword/login.html">
+                    <div class="user-button">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                        </svg>
+                        <p class="username">User</p>
+
+                    </div>
+
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="header-title">social-net</h1>
+                <h2 class="header-slogan">Find your everyday reads here!</h2>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/navbar') %>
+
+        <section class="posts-list">
+            <div class="posts-box">
+                <div class="posts-categories">
+                    <div class="posts-category-title">social-net</div>
+                    <a class="posts-category-item" href="/posts/featured">Featured</a>
+                    <a class="posts-category-item" href="/posts/latest">Latest</a>
+                </div>
+                <div class="search-query">
+                    Posts Related to "<%= q %>"
+                </div>
+
+                <% if(searchPosts !="" ) { for(let post of searchPosts) { %>
+                    <div class="post-card">
+                        <div class="cardContent">
+                            <img class="cardImage" src="<%= post.imgSrc %>"></img>
+                            <div class="cardText">
+                                <p class="date-line">
+                                    <%= post.formatDate(post.date) %>
+                                </p>
+                                <div class="cardHeader"><a href="/post/<%= post._id %>">
+                                        <%= post.title %>
+                                    </a></div>
+                                <p class="author-line">By: <span class="author"><a href="/user/<%= post.username %> ">
+                                            <%= post.username %>
+                                        </a></span> <span class="cardCategory"><a href="school.html">
+                                            <%= post.category %>
+                                        </a></span>
+                                </p>
+                                <p class="cardDesc">
+                                    <%= post.content %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% }} else if(searchPosts=="" ){%>
+
+                        <div class="cardText">Sorry, there is nothing related to "<%= q %>".
+                        </div>
+
+
+                        <% } %>
+
+
+
+            </div>
+
+        </section>
+
+
+        <%- include('../partials/footer') %>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+                crossorigin="anonymous"></script>
+</body>
+
+</html>

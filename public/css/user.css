@@ -1,0 +1,375 @@
+    #background {
+        background-attachment: fixed;
+        background-size: 100% 50%;
+    }
+
+    .backgroundImage {
+        background-attachment: fixed;
+        height: 50%;
+        width: 100%;
+    }
+
+    #font1 {
+        font-family: 'Noto Sans';
+    }
+
+    #font2 {
+        font-family: 'Rancho';
+    }
+
+    .topnav {
+        overflow: hidden;
+        position: fixed;
+        background-image: linear-gradient(#004e98, #003C75);
+        box-shadow: 0px 2px 15px;
+        top: 0;
+        width: 100%;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 45px 16px;
+        text-decoration: none;
+        font-family: 'Noto Sans';
+        font-size: 22px;
+    }
+
+    .button {
+        padding: 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border: 1px solid white;
+        padding: 3px 15px;
+        border-radius: 8px;
+        font-family: 'Noto Sans';
+    }
+
+    .topnavbutton {
+        background-color: #ff6700;
+        color: white;
+        border: 1px solid #ff6700;
+    }
+
+    .topnavbutton:hover {
+        background-color: #D85700;
+        color: lightgray;
+        border: 1px solid #D85700;
+    }
+
+    .topnavbutton:active {
+        background-color: #ae4600;
+        color: lightgray;
+        border: 1px solid white;
+    }
+
+    input {
+        border-radius: 6px;
+        border: 1px solid #c0c0c0;
+        padding: 3px 15px;
+        position: fixed;
+    }
+
+    .userpageframe {
+        overflow: hidden;
+        position: fixed;
+        background-image: linear-gradient(#f2f2f2, #ebebeb);
+        box-shadow: 0px 10px 40px;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .userpageframe a {
+        float: left;
+        color: #004e98;
+        text-align: center;
+        padding: 240px 16px;
+        text-decoration: none;
+        font-family: 'Noto Sans';
+        font-size: 22px;
+    }
+
+    .UserpagePosts {
+        background: #c0c0c0;
+        padding: 10px 40px;
+        width: 850px;
+        height: 300px;
+        overflow: auto;
+        position: absolute;
+        font-family: 'Noto Sans';
+        font-size: 15px;
+        border-radius: 28px;
+        box-shadow: 0px 1px 7px black;
+    }
+
+    .UserpagePostsPosts {
+        background-image: linear-gradient(#f2f2f2, #ebebeb);
+        text-align: left;
+        box-shadow: 0px 1px 7px black;
+        width: 350px;
+        height: 400px;
+        border-radius: 25px;
+        display: inline-block;
+        text-align: left;
+        padding: 14px;
+        text-decoration: none;
+        margin: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .UserpagePostsPosts:hover {
+        background-image: linear-gradient(#dadada, #c6c6c6);
+        color: #003669;
+        box-shadow: 0px 1px 17px black;
+    }
+
+    .UserpagePostsPosts:active {
+        background-image: linear-gradient(#004e98, #003C75);
+        color: white;
+        box-shadow: 0px 1px 17px black;
+        border: solid white 1px;
+    }
+
+    #NavbarIconImage {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        box-shadow: 0px 1px 7px black;
+    }
+
+    #NavbarIconImage:hover {
+        -webkit-filter: brightness(70%);
+    }
+
+    #NavbarIconImage:active {
+        border: solid white 1px;
+        -webkit-filter: brightness(70%);
+    }
+
+    .NavbarUserIcon {
+        position: fixed;
+        right: 50px;
+        top: 115px;
+    }
+
+    .NavbarHomeIcon {
+        position: fixed;
+        right: 150px;
+        top: 115px;
+    }
+
+    .NavbarLogoutIcon {
+        position: fixed;
+        right: 250px;
+        top: 115px;
+    }
+
+    .NavbarCreatePostIcon {
+        position: fixed;
+        right: 350px;
+        top: 115px;
+    }
+
+    .NavbarLogo {
+        position: fixed;
+        left: 26px;
+        top: 6px;
+    }
+
+    #NavbarLogoImage {
+        width: 75px;
+        height: 75px;
+    }
+
+    #NavbarLogoImage:hover {
+        -webkit-filter: brightness(80%);
+    }
+
+    #NavbarLogoImage:active {
+        -webkit-filter: brightness(70%);
+    }
+
+    .NavbarTitle {
+        position: fixed;
+        left: 130px;
+        top: 5px;
+        font-size: 40px;
+        text-decoration: none;
+        color: white;
+    }
+
+    .NavbarTitle:hover {
+        color: #e6e6e6;
+        text-shadow: 0px 1px 10px black;
+    }
+
+    .NavbarTitle:active {
+        color: #bebebe;
+        text-shadow: 0px 5px 15px black;
+    }
+
+    .NavbarSlogan {
+        position: fixed;
+        left: 160px;
+        top: 45px;
+        font-size: 20px;
+        text-decoration: none;
+        color: white;
+    }
+
+    .NavbarSlogan:hover {
+        color: #e6e6e6;
+        text-shadow: 0px 1px 10px black;
+    }
+
+    .NavbarSlogan:active {
+        color: #bebebe;
+        text-shadow: 0px 5px 15px black;
+    }
+
+    .ProfileUsername {
+        position: fixed;
+        left: 160px;
+        top: 120px;
+        font-size: 50px;
+        color: white;
+        text-decoration: none;
+        text-shadow: 0px 1px 15px black;
+    }
+
+    .ProfileUsername:hover {
+        color: #e6e6e6;
+        text-shadow: 0px 1px 20px black;
+    }
+
+    .ProfileUsername:active {
+        color: #bebebe;
+        text-shadow: 0px 5px 25px black;
+    }
+
+    .ProfileIcon {
+        position: fixed;
+        left: 50px;
+        top: 115px;
+    }
+
+    #ProfileIconImage {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        box-shadow: 0px 1px 7px black
+    }
+
+    #ProfileIconImage:hover {
+        -webkit-filter: brightness(70%);
+    }
+
+    #ProfileIconImage:active {
+        border: solid white 1px;
+    }
+
+    #NavbarUserIconImage:hover {
+        -webkit-filter: brightness(70%);
+    }
+
+    #NavbarUserIconImage:active {
+        border: solid white 1px;
+        -webkit-filter: brightness(70%);
+    }
+
+    .BioTitle {
+        position: absolute;
+        left: 40px;
+        top: 0px;
+        font-size: 50px;
+        color: #003C75
+    }
+
+    .BioDesc {
+        position: absolute;
+        left: 40px;
+        top: 65px;
+        font-size: 18px;
+        text-align: left;
+        width: 450px;
+        color: #003C75;
+    }
+
+    .PostDisplayTitle {
+        position: absolute;
+        left: 545px;
+        top: 0px;
+        font-size: 50px;
+        color: #003C75
+    }
+
+    .PostTitle {
+        font-weight: bolder;
+        font-size: 25px;
+    }
+
+    .PostDescription {
+        font-size: 13px
+    }
+
+    .PostBody {
+        font-size: 15px
+    }
+
+    .PhotoGif {
+        position: absolute;
+        left: 40px;
+        top: 150px;
+    }
+
+    #PhotoGifImage {
+        width: 400px;
+        height: 300px;
+        border-radius: 10%;
+        box-shadow: 0px 1px 7px black
+    }
+
+    .SortPostsBy {
+        position: absolute;
+        top: 85px;
+        font-size: 18px;
+        text-align: left;
+        width: 450px;
+        color: #003C75;
+        text-decoration: none;
+    }
+
+    .SortPostsBy:hover {
+        font-weight: bolder;
+        color: white;
+        text-shadow: 0px 1px 10px black;
+    }
+
+    .SortPostsBy:active {
+        font-weight: bolder;
+        color: #00284e;
+        text-shadow: 0px 1px 15px black;
+    }
+
+    .PostPhoto {
+        position: absolute;
+        margin: 20px 0px 0px 0px
+    }
+
+    #PostPhotoImage {
+        width: 320px;
+        height: 200px;
+        border-radius: 10%;
+        box-shadow: 0px 1px 7px black;
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
+    }
