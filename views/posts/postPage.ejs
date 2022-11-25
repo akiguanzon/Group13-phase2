@@ -97,7 +97,7 @@
             </div>
             <% for(let i=0; i < post.comments.length; i++) {%>
                 <div class="infoSec">
-                    <img src="" class="pfp">
+                    <img src=<%= post.comments[i].profilephoto %> class="pfp">
                     <div class="comment">
                         <a class="misc" href="/user/<%= post.comments[i].username %>">
                             <%= post.comments[i].username %>
