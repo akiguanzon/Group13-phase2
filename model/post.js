@@ -39,6 +39,10 @@ const postSchema = new mongoose.Schema({
             date: {
                 type: Date,
                 default: Date.now
+            },
+            profilephoto: {
+                type: String,
+                default: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'
             }
         }
     ],
