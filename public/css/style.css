@@ -722,6 +722,10 @@ h2 {
     color: var(--primary);
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 /* END OF FOOTER CODE */
 
 /* MEDIA QUERIES */

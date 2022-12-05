@@ -373,3 +373,38 @@
         background-color: transparent;
         border: none;
     }
+
+    .searchButton {
+        position: fixed;
+        right: 45px;
+        top: 20px
+    }
+
+    .searchBar {
+        position: fixed;
+        right: 155px;
+        top: 25px;
+        width: 400px
+    }
+
+    .viewPost {
+        right: 450px;
+    }
+
+    .viewCategory {
+        right: 300px;
+    }
+
+    .viewLatest {
+        right: 160px;
+    }
+
+    .viewFeatured {
+        right: 40px;
+    }
+
+    .viewUserPost {
+        right: 50px;
+        top: 150px;
+        color: #003C75
+    }

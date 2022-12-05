@@ -13,6 +13,9 @@
 
     <link rel="stylesheet" href="/css/user.css">
 
+    <title>Social-net | <%= currentUser.username %>
+    </title>
+
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Rancho' rel='stylesheet'>
 
@@ -59,10 +62,11 @@
             id="NavbarIconImage"></a>
 
     <!-- Navbar Search Button -->
-    <a style="position:fixed;right:45px;top:20px"><button class="button topnavbutton">Search</button></a>
-    <!-- Navbar Search Bar -->
-    <form>
-        <input type="text" style="position:fixed;right:155px;top:25px;width:400px">
+    <form action="/posts/search">
+        <button class="button topnavbutton searchButton">Search</button>
+
+        <!-- Navbar Search Bar -->
+        <input type="text" class="searchBar" name="q">
     </form>
     <!-- Profile Icon -->
     <a href="" class=" ProfileIcon"><img src="<%= currentUser.profilePicUrl %>" id="ProfileIconImage"></a>
@@ -83,12 +87,12 @@
             <%= currentUser.bio %>
         </div>
 
-        <div id="font1" class="SortPostsBy" style="right:450px">View Posts By:</div>
-        <div onclick="location.href='/';" id="font1" class="SortPostsBy" style="right:300px">By Category
+        <div id="font1" class="SortPostsBy viewPost">View Posts By:</div>
+        <div onclick="location.href='/';" id="font1" class="SortPostsBy viewCategory">By Category
         </div>
-        <div onclick="location.href='/posts/latest';" id="font1" class="SortPostsBy" style="right:160px">By
+        <div onclick="location.href='/posts/latest';" id="font1" class="SortPostsBy viewLatest">By
             Latest</div>
-        <div onclick="location.href='/posts/featured';" id="font1" class="SortPostsBy" style="right:40px">
+        <div onclick="location.href='/posts/featured';" id="font1" class="SortPostsBy viewFeatured">
             By
             Feature</div>
 
@@ -102,7 +106,7 @@
         </div>
         <!-- "Posts Displayer -->
 
-        <div class="UserpagePosts" style="right:50px;top:150px;color:#003C75">
+        <div class="UserpagePosts viewUserPost">
 
             <% for(post of posts) { %>
 

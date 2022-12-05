@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const { body: validate, validationResult } = require('express-validator');
 
 var Post = require('./model/post');
 var User = require('./model/user');
@@ -170,7 +171,22 @@ app.get('/user/:username', async (req, res) => {
     var currentUser = await User.findOne({ "username": username });
     var posts = await Post.find({ 'username': username })
 
-    res.render('users/userPage', { currentUser, posts });
+
+    if (currentUser) {
+        res.render('users/userPage', { currentUser, posts });
+    }
+    else {
+        data = {
+            username: 'Not found',
+            password: 'unknown',
+            profilePicUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
+            gifUrl: 'https://media0.giphy.com/media/LbBSU26sSRAE8/giphy.gif',
+            backgroundUrl: 'https://media0.giphy.com/media/3ohhwBL1q1I66srvAA/giphy.gif',
+            bio: 'User not found.'
+        }
+        currentUser = new User(data);
+        res.render('users/userPage', { currentUser, posts });
+    }
 })
 
 app.post('/user', async (req, res) => {
