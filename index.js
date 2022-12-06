@@ -3,7 +3,6 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
-const { body: validate, validationResult } = require('express-validator');
 
 var Post = require('./model/post');
 var User = require('./model/user');
@@ -27,6 +26,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, '/public')));
+
+function isValidUrl(data) {
+    let url;
+    try {
+        url = new URL(data)
+    } catch (_) {
+        return false;
+    }
+    return url.protocol === "http:" || url.protocol === "https:"
+}
 
 var message = '';
 
@@ -64,73 +73,182 @@ app.get('/posts/:category', async (req, res) => {
 })
 
 app.get('/post/new', (req, res) => {
-    res.render('posts/newPage', { categories });
+    res.render('posts/newPage', { categories, message });
+    message = '';
 })
 
 app.post('/posts', async (req, res) => {
-    var data = req.body
-    var newData = new Post(data)
-    await newData.save();
-    res.redirect('/');
+
+    var data = req.body;
+
+    if (!data.title) {
+        message = 'Invalid title. Make sure it has more than 5 characters'
+        console.log('haha');
+        res.redirect('/post/new');
+    }
+    else if (!isValidUrl(data.url)) {
+        message = 'Not a valid url. Please include https:// in the start.'
+        res.redirect('/post/new');
+    }
+    else {
+        if (!isValidUrl(data.imgSrc)) {
+            data.imgSrc = undefined;
+        }
+        var newData = new Post(data);
+        await newData.save()
+            .then(async () => {
+                res.redirect('/');
+            })
+            .catch((err) => {
+                message = err;
+                res.redirect('/post/new');
+            })
+
+    }
+
+
 })
 
 app.post('/post/:id/comments', async (req, res) => {
     const data = req.body;
     var { id } = req.params;
-    var currentPost = await Post.findById(id);
-    currentPost.comments.push(data);
-    await currentPost.save();
-    res.redirect(`/post/${id}`);
+    var currentPost = await Post.findById(id)
+        .then(async (currentPost) => {
+            currentPost.comments.push(data);
+            await currentPost.save();
+        })
+        .then(async () => {
+            res.redirect(`/post/${id}`);
+        }
+        )
+        .catch(() => {
+            message = 'Please input a comment.'
+            res.redirect(`/post/${id}`);
+        })
 })
+
+
 
 app.get('/post/:id', async (req, res) => {
     const { id } = req.params;
-    let post = await Post.findById(id);
-    res.render('posts/postPage', { post });
+    var post = await Post.findById(id)
+        .then((post) => {
+            res.render('posts/postPage', { post, message });
+        })
+        .catch(() => {
+            res.redirect('/');
+        })
+
+    message = '';
 })
 
 app.get('/post/:id/edit', async (req, res) => {
     const { id } = req.params;
-    var post = await Post.findById(id);
-    res.render('posts/updatePost', { post, categories });
+    var post = await Post.findById(id)
+        .then((post) => {
+            res.render('posts/updatePost', { post, categories, message });
+        })
+        .catch(() => {
+            res.redirect('/');
+        })
+
+    message = '';
 })
 
 app.patch('/post/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, url, imgSrc, content, category } = req.body;
-    const post = await Post.findByIdAndUpdate(id, { title, url, imgSrc, content, category }, { runValidators: true });
-    res.redirect(`/post/${id}`);
+    const post = req.body;
+
+    if (!post.title) {
+        message = 'Invalid title. Make sure it has more than 5 characters'
+        console.log('haha');
+        res.redirect(`/post/${id}/edit`);
+    }
+
+    else if (!isValidUrl(post.url)) {
+        message = 'Not a valid url. Please include https:// in the start.'
+        res.redirect(`/post/${id}/edit`);
+    }
+    else {
+        if (!isValidUrl(post.imgSrc)) {
+            post.imgSrc = undefined;
+        }
+        const { title, url, imgSrc, content, category } = post;
+        await Post.findByIdAndUpdate(id, { title, url, imgSrc, content, category }, { runValidators: true })
+            .then(({ id }) => {
+                res.redirect(`/post/${id}`);
+            })
+            .catch(() => {
+                res.redirect('/');
+            })
+
+    }
 })
+
+
+
+
 
 app.delete('/post/:id', async (req, res) => {
     const { id } = req.params;
-    await Post.findByIdAndDelete(id);
-    res.redirect('/');
+    await Post.findByIdAndDelete(id)
+        .then(() => {
+            res.redirect('/');
+        })
+        .catch(() => {
+            res.redirect('/');
+        })
+
 })
 
 app.get('/post/:id/comment/:index', async (req, res) => {
     const { id, index } = req.params;
-    var post = await Post.findById(id);
-    console.log(index);
-    res.render('comments/updateComment', { post, index });
+    var post = await Post.findById(id)
+        .then(async (post) => {
+            res.render('comments/updateComment', { post, index, message });
+        })
+        .catch(() => {
+            res.redirect('/');
+        })
+
+    message = '';
 })
 
 app.patch('/post/:id/comment/:index', async (req, res) => {
     const { id, index } = req.params;
     const { body } = req.body;
-    var currentPost = await Post.findById(id);
-    currentPost.comments[index].body = body;
-    await currentPost.save();
-
-    res.redirect(`/post/${id}`);
+    var currentPost = await Post.findById(id)
+        .then(async (currentPost) => {
+            currentPost.comments[index].body = body;
+            await currentPost.save();
+        })
+        .then(async () => {
+            res.redirect(`/post/${id}`);
+        }
+        )
+        .catch(() => {
+            message = 'Please input a comment.'
+            res.redirect(`/post/${id}/comment/${index}`);
+        })
 })
 
 app.delete('/post/:id/comment/:index', async (req, res) => {
     const { id, index } = req.params;
-    var currentPost = await Post.findById(id);
-    await currentPost.comments.pull(index);
-    await currentPost.save();
-    res.redirect(`/post/${id}`);
+    var currentPost = await Post.findById(id)
+        .then(async (currentPost) => {
+            await currentPost.comments.pull(index);
+            return currentPost;
+        })
+        .then(async (currentPost) => {
+            await currentPost.save();
+        })
+        .then(() => {
+            res.redirect(`/post/${id}`);
+        })
+        .catch(() => {
+            res.redirect('/');
+        })
+
 })
 
 
@@ -140,6 +258,7 @@ app.get('/signup', async (req, res) => {
     var usernames = await User.find();
 
     res.render('users/createUser', { usernames, message });
+    message = '';
 })
 
 app.get('/user', async (req, res) => {
@@ -190,7 +309,6 @@ app.get('/user/:username', async (req, res) => {
 })
 
 app.post('/user', async (req, res) => {
-    message = '';
     var users = await User.find()
         .then(async () => {
             var data = req.body;
@@ -243,14 +361,30 @@ app.post('/user', async (req, res) => {
 app.get('/user/:username/edit', async (req, res) => {
     var { username } = req.params;
     var user = await User.findOne({ username });
-    res.render('users/editUser', { user });
+    res.render('users/editUser', { user, message });
+
+    message = '';
 })
 
 app.patch('/user/:username', async (req, res) => {
-    var { username } = req.params;
+    const { username } = req.params;
     var { bio, backgroundUrl, gifUrl, profilePicUrl } = req.body;
-    var user = await User.findOneAndUpdate({ username }, { bio, backgroundUrl, gifUrl, profilePicUrl });
-    res.redirect(`/user/${username}`);
+
+    if (!isValidUrl(backgroundUrl) || !isValidUrl(gifUrl) || !isValidUrl(profilePicUrl)) {
+        message = 'Invalid URL.';
+        res.redirect(`/user/${username}/edit`);
+    }
+    else {
+        var user = await User.findOneAndUpdate({ username }, { bio, backgroundUrl, gifUrl, profilePicUrl })
+            .then(() => {
+                res.redirect(`/user/${username}`);
+            })
+            .catch(() => {
+                res.redirect('/');
+            })
+    }
+
+
 })
 
 app.delete('/user/:username', async (req, res) => {
@@ -264,6 +398,7 @@ app.delete('/user/:username', async (req, res) => {
 
 app.get('/login', async (req, res) => {
     res.render('users/login', { message });
+    message = '';
 })
 
 

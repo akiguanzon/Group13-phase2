@@ -16,7 +16,7 @@
     <div class="container text-center" id="header">
         <div class="row">
             <div class="user">
-                <a href="../login">
+                <a href="/login">
                     <div class="user-button">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
@@ -77,9 +77,18 @@
                     <textarea class="form-control" rows="3" placeholder="Short description" id="content"
                         name="content"><%= post.content  %> </textarea>
                 </div>
-                <div class="sub-container">
-                    <input type="submit" name="submitButton" value="Submit" class="button">
-                </div>
+                <% if(message) { %>
+                    <div class="mb-3">
+                        <p class="misc">
+
+                            <%= message %>
+
+                        </p>
+                    </div>
+                    <% } %>
+                        <div class="sub-container">
+                            <input type="submit" name="submitButton" value="Submit" class="button">
+                        </div>
             </form>
         </div>
 

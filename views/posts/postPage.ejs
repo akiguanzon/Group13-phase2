@@ -16,7 +16,7 @@
     <div class="container text-center" id="header">
         <div class="row">
             <div class="user">
-                <a href="../login">
+                <a href="/login">
                     <div class="user-button">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
@@ -76,19 +76,28 @@
             <div class="categoryBox">
                 <p class="category">Write a comment</p>
             </div>
-            <div class="mb-3">
-                <form action="/post/<%= post._id %>/comments" method="post" autocomplete="off">
-                    <input type="text" name="username" placeholder="Username" class="form-control">
-                    <textarea class="form-control" rows="3" placeholder="Write a comment" name="body"></textarea>
-                    <button type="submit" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                            fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
-                        </svg></button>
-                </form>
+            <% if(message) { %>
+                <div class="mb-3">
+                    <p class="misc">
+                        <%=message %>
+                    </p>
+                </div>
+
+                <% } %>
+                    <div class="mb-3">
+                        <form action="/post/<%= post._id %>/comments" method="post" autocomplete="off">
+                            <input type="text" name="username" placeholder="Username" class="form-control">
+                            <textarea class="form-control" rows="3" placeholder="Write a comment"
+                                name="body"></textarea>
+                            <button type="submit" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
+                                </svg></button>
+                        </form>
 
 
-            </div>
+                    </div>
         </div>
 
         <div class="commentSection">
@@ -97,7 +106,7 @@
             </div>
             <% for(let i=0; i < post.comments.length; i++) {%>
                 <div class="infoSec">
-                    <img src=<%= post.comments[i].profilephoto %> class="pfp">
+                    <img src=<%=post.comments[i].profilephoto %> class="pfp">
                     <div class="comment">
                         <a class="misc" href="/user/<%= post.comments[i].username %>">
                             <%= post.comments[i].username %>

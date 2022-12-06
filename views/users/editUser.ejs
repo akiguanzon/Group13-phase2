@@ -16,7 +16,7 @@
     <div class="container text-center" id="header">
         <div class="row">
             <div class="user">
-                <a href="../login-signup-forgotpassword/login.html">
+                <a href="/login">
                     <div class="user-button">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
@@ -67,9 +67,18 @@
                     <input type="text" class="form-control" placeholder="Short description" id="profilePicUrl"
                         name="profilePicUrl" value="<%=user.profilePicUrl %>">
                 </div>
-                <div class=" sub-container">
-                    <input type="submit" name="submitButton" value="Submit" class="button">
-                </div>
+                <% if(message) { %>
+                    <div class="mb-3">
+                        <p class="misc">
+
+                            <%= message %>
+
+                        </p>
+                    </div>
+                    <% } %>
+                        <div class=" sub-container">
+                            <input type="submit" name="submitButton" value="Submit" class="button">
+                        </div>
             </form>
         </div>
 
