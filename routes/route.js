@@ -11,10 +11,10 @@ app.get('/', controllerhome.goHome);
 
 //Login and signup section
 app.get('/login', controlleruser.login);
-app.get('/user', controlleruser.checkLogin);
-app.post('/user', controlleruser.userPage);
+app.post('/user', controlleruser.checkLogin);
+app.get('/user/:username', controlleruser.userPage);
 app.get('/signup', controlleruser.signup);
-app.post('/user', controlleruser.addUser);
+app.post('/signup', controlleruser.addUser);
 app.get('/logout', controlleruser.logout);
 app.get('/user/:username/edit', controlleruser.editUser);
 app.patch('/user/:username', controlleruser.verifyEditUser);
