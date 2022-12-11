@@ -42,7 +42,7 @@
         here!</a>
 
     <!-- Navbar User Icon -->
-    <a href="/" class="NavbarUserIcon"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+    <a href="/user/<%= currentUser.username %>" class="NavbarUserIcon"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
             id="NavbarIconImage"></a>
 
     <!-- Navbar Home Icon -->
@@ -71,7 +71,7 @@
     <!-- Profile Icon -->
     <a href="" class=" ProfileIcon"><img src="<%= currentUser.profilePicUrl %>" id="ProfileIconImage"></a>
     <!-- Profile Username -->
-    <a href="../Userpages/UserpageAveryMann.html" id="font2" class="ProfileUsername">
+    <a href="/user/<%= currentUser.username %>" id="font2" class="ProfileUsername">
         <%= currentUser.username %>
     </a>
 
