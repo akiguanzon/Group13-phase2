@@ -1,3 +1,6 @@
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -36,3 +39,8 @@ app.listen(3000, () => {
 })
 
 app.use('/', routes);
+
+app.use(session({
+    secret: 'foo',
+    store: new MongoStore(options)
+}));
