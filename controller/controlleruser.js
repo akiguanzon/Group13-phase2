@@ -13,31 +13,55 @@ function isValidUrl(data) {
     return url.protocol === "http:" || url.protocol === "https:"
 }
 
+function comparePassword(plaintextPassword, hash) {
+    bcrypt.compare(plaintextPassword, hash)
+        .then(result => {
+            console.log(`result is ${result}`);
+            return result
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+
+
+message = '';
+
 const controlleruser = {
     //Go to login page
-    login: async(req, res) => {
+    login: async (req, res) => {
+        if (!req.session.username) {
+            res.render('users/login', { message });
+        }
+        else {
+            res.redirect(`/user/${req.session.username}`)
+        }
         message = '';
-        res.render('users/login', { message });
     },
 
     //Verify login and go to user page if successful
-    checkLogin: async(req, res) => {
+    checkLogin: async (req, res) => {
         message = '';
+        var check;
         var data = req.query;
-        var user = await User.findOne({ username: data.username })
-            .then(async () => {
+        var user = await User.findOne({ username: req.body.username })
+            .then(async (check) => {
                 var user = await User.findOne({ username: req.body.username });
-                if (user.username === req.body.username && bcrypt.compare(user.password, req.body.password)) {
-                    console.log('Successful login');
-                    req.session.username = req.body.username;
-                    var currentUser = await User.findOne({ 'username': req.session.username });
-                    var posts = await Post.find({ 'username': req.session.username })
-                    res.render('users/userPage', { currentUser, posts });
-                }
-                else{
-                    message = 'Wrong password!';
-                    console.log('Wrong password');
-                    res.redirect('/login');
+                if (user.username === req.body.username) {
+
+                    bcrypt.compare(req.body.password, user.password, async function (err, isMatch) {
+                        if (!isMatch) {
+                            message = 'Passwords do not match.';
+                            res.redirect('/login');
+                        }
+                        else {
+                            req.session.username = req.body.username;
+                            var currentUser = await User.findOne({ 'username': req.session.username });
+                            var posts = await Post.find({ 'username': req.session.username })
+                            res.render('users/userPage', { currentUser, posts });
+                        }
+                    })
                 }
             })
             .catch(() => {
@@ -48,12 +72,11 @@ const controlleruser = {
     },
 
     //Go to user page
-    userPage: async(req, res) => {
-        if(req.session.username){
+    userPage: async (req, res) => {
+        if (req.session.username) {
             var { username } = req.params;
             var currentUser = await User.findOne({ 'username': username });
-            var posts = await Post.find({ 'username': username })
-        
+            var posts = await Post.find({ 'username': username });
             if (currentUser) {
                 res.render('users/userPage', { currentUser, posts });
             }
@@ -70,7 +93,7 @@ const controlleruser = {
                 res.render('users/userPage', { currentUser, posts });
             }
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
@@ -78,9 +101,9 @@ const controlleruser = {
     },
 
     //Go to register page
-    signup: async(req, res) => {
+    signup: async (req, res) => {
         var usernames = await User.find();
-    
+
         res.render('users/createUser', { usernames, message });
         message = '';
     },
@@ -139,20 +162,25 @@ const controlleruser = {
     },
 
     //Logout
-    logout: async(req, res) => {
+    logout: async (req, res) => {
         req.session.destroy();
         res.redirect('/');
     },
 
     //Edit user
     editUser: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             var { username } = req.params;
             message = '';
             var user = await User.findOne({ username });
-            res.render('users/editUser', { user, message });
+            if (user.username === req.session.username) {
+                res.render('users/editUser', { user, message });
+            }
+            else {
+                res.redirect(`/user/${user.username}`);
+            }
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
@@ -161,10 +189,10 @@ const controlleruser = {
 
     //Verify edit user
     verifyEditUser: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             const { username } = req.params;
             var { bio, backgroundUrl, gifUrl, profilePicUrl } = req.body;
-        
+
             if (!isValidUrl(backgroundUrl) || !isValidUrl(gifUrl) || !isValidUrl(profilePicUrl)) {
                 message = 'Invalid URL.';
                 res.redirect(`/user/${username}/edit`);
@@ -179,7 +207,7 @@ const controlleruser = {
                     })
             }
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
@@ -188,13 +216,20 @@ const controlleruser = {
 
     //Delete user
     deleteUser: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             var { username } = req.params;
-            var user = await User.findOneAndDelete({ username });
-        
-            res.redirect('/');
+            var user = await User.findOne({ username });
+            if (user.username === req.session.username) {
+                req.session.destroy();
+                var user = await User.findOneAndDelete({ username });
+                res.redirect('/');
+            }
+            else {
+                res.redirect(`/user/${username}`);
+            }
+
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');

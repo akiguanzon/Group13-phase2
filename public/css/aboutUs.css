@@ -1,0 +1,146 @@
+#font1 {
+    font-family: 'Noto Sans';
+}
+
+#background {
+    background-image: linear-gradient(45deg, red, yellow);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.Bar {
+    overflow: hidden;
+    position: absolute;
+    background-image: linear-gradient(45deg, #003465, #0065c5);
+    box-shadow: 0px 2px 15px;
+    top: 0;
+    right: 0;
+    width: 750px;
+    height: 750px;
+}
+
+.Bar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 100px 16px;
+    text-decoration: none;
+    font-family: 'Noto Sans';
+    font-size: 22px;
+}
+
+.ABOUTUS {
+    top: 10px;
+    right: 175px;
+    font-size: 75px;
+    text-align: center;
+    color: white;
+    position: absolute;
+}
+
+.ABOUTUS:hover {
+    color: #ff6700;
+    text-shadow: 0px 1px 10px black;
+}
+
+.ABOUTUS:active {
+    color: #ff6700;
+    font-weight: bolder;
+    text-shadow: 0px 1px 15px black;
+}
+
+.LINE {
+    overflow: hidden;
+    position: absolute;
+    background: white;
+    top: 120px;
+    right: 105px;
+    width: 70%;
+    height: 1%
+}
+
+.PARAGRAPH {
+    color: white;
+    margin: 170px 50px 50px 60px;
+    font-size: 20px;
+    text-align: justify;
+}
+
+.BACKTOHOMEPAGE {
+    color: white;
+    margin: 300px 50px 0px 200px;
+    font-size: 20px;
+    text-align: right;
+}
+
+.BACKTOHOMEPAGE:hover {
+    color: #ff6700;
+    text-shadow: 0px 1px 20px black;
+}
+
+.BACKTOHOMEPAGE:active {
+    font-weight: bolder;
+    color: #ff6700;
+    text-shadow: 0px 5px 25px black;
+}
+
+.LOGO {
+    position: fixed;
+    margin: 30px 50px 0px 30px;
+}
+
+#LOGOPHOTO {
+    width: 250px;
+    height: auto;
+}
+
+.SOCIALNET {
+    position: fixed;
+    left: 290px;
+    top: 55px;
+    font-size: 70px;
+    text-decoration: none;
+    color: white;
+}
+
+.SOCIALNET:hover {
+    text-shadow: 0px 1px 5px black;
+}
+
+.SOCIALNET:active {
+    font-weight: bolder;
+    text-shadow: 0px 1px 10px black;
+}
+
+.SLOGAN {
+    position: fixed;
+    left: 290px;
+    top: 150px;
+    font-size: 25px;
+    text-decoration: none;
+    color: white;
+}
+
+.SLOGAN:hover {
+    text-shadow: 0px 1px 5px black;
+}
+
+.SLOGAN:active {
+    font-weight: bolder;
+    text-shadow: 0px 1px 10px black;
+}
+
+.GIF {
+    position: fixed;
+    left: 20px;
+    top: 270px;
+    font-size: 25px;
+    text-decoration: none;
+    color: white;
+}
+
+#GIFPHOTO {
+    width: 650px;
+    height: auto;
+}

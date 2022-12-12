@@ -1,5 +1,6 @@
 var Post = require('../model/post');
 var categories = ['School', 'Music', 'Travel', 'Gaming', 'Art'];
+const mongoose = require('mongoose');
 
 function isValidUrl(data) {
     let url;
@@ -20,7 +21,7 @@ const controllerpost = {
     },
 
     //Show latest posts
-    latestPosts:  async (req, res) => {
+    latestPosts: async (req, res) => {
         var q = "Latest";
         var searchPosts = await Post.find({}).sort({ 'date': -1 });
         res.render('posts/search', { q, searchPosts });
@@ -55,11 +56,11 @@ const controllerpost = {
 
     //Create post
     newPosts: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             message = '';
             res.render('posts/newPage', { categories, message });
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
@@ -68,8 +69,9 @@ const controllerpost = {
 
     //Verify new post
     verifyNewPost: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             var data = req.body;
+            data.username = req.session.username;
             if (!data.title) {
                 message = 'Invalid title. Make sure it has more than 5 characters'
                 console.log('haha');
@@ -94,7 +96,7 @@ const controllerpost = {
                     })
             }
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
@@ -103,28 +105,34 @@ const controllerpost = {
 
     //Edit post
     editPost: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             const { id } = req.params;
             message = '';
             var categories = ['School', 'Music', 'Travel', 'Gaming', 'Art'];
             var post = await Post.findById(id)
                 .then((post) => {
-                    res.render('posts/updatePost', { post, categories, message });
+                    if (post.username === req.session.username) {
+                        res.render('posts/updatePost', { post, categories, message });
+                    }
+                    else {
+                        message = 'You are not the author of the post.'
+                        res.redirect(`/post/${post._id}`)
+                    }
                 })
                 .catch(() => {
                     res.redirect('/');
                 })
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
         }
     },
-    
+
     //Verify edit post
     verifyEditPost: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             const { id } = req.params;
             const post = req.body;
             if (!post.title) {
@@ -150,26 +158,33 @@ const controllerpost = {
                     })
             }
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
         }
     },
-    
+
     //Delete post
     deletePost: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             const { id } = req.params;
-            await Post.findByIdAndDelete(id)
-                .then(() => {
-                    res.redirect('/');
-                })
-                .catch(() => {
-                    res.redirect('/');
-                })
+            var post = await Post.findById(id);
+            if (post.username == req.session.username) {
+                await Post.findByIdAndDelete(id)
+                    .then(() => {
+                        res.redirect('/');
+                    })
+                    .catch(() => {
+                        res.redirect('/');
+                    })
+            }
+            else {
+                message = 'You are not the author of the post.'
+                res.redirect(`/post/${post._id}`)
+            }
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
@@ -178,8 +193,9 @@ const controllerpost = {
 
     //Comments
     comments: async (req, res) => {
-        if(req.session.username){
-            const data = req.body;
+        if (req.session.username) {
+            var data = req.body;
+            data.username = req.session.username;
             var { id } = req.params;
             var currentPost = await Post.findById(id)
                 .then(async (currentPost) => {
@@ -195,36 +211,42 @@ const controllerpost = {
                     res.redirect(`/post/${id}`);
                 })
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
         }
     },
-    
+
     //Update comment
     updateComment: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             const { id, index } = req.params;
             message = '';
             var post = await Post.findById(id)
                 .then(async (post) => {
-                    res.render('comments/updateComment', { post, index, message });
+                    if (post.comments[index].username === req.session.username) {
+                        res.render('comments/updateComment', { post, index, message });
+                    }
+                    else {
+                        message = 'You are not the author of the comment.';
+                        res.redirect(`/post/${post._id}`)
+                    }
                 })
                 .catch(() => {
                     res.redirect('/');
                 })
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
         }
     },
-    
+
     //
     comment: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             const { id, index } = req.params;
             const { body } = req.body;
             var currentPost = await Post.findById(id)
@@ -241,33 +263,43 @@ const controllerpost = {
                     res.redirect(`/post/${id}/comment/${index}`);
                 })
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');
         }
     },
-    
+
     //Delete comment
     deleteComment: async (req, res) => {
-        if(req.session.username){
+        if (req.session.username) {
             const { id, index } = req.params;
-            var currentPost = await Post.findById(id)
-                .then(async (currentPost) => {
-                    await currentPost.comments.pull(index);
-                    return currentPost;
+            console.log(index)
+            var post = await Post.findById(id)
+                .then(async (post) => {
+                    for (let comment of post.comments) {
+                        if (comment._id == index) {
+                            if (comment.username == req.session.username) {
+                                await post.comments.pull(index);
+                                console.log(post)
+                                await post.save();
+                                return post
+                            }
+                            else {
+                                message = 'You are not the author of this comment.'
+                                return post;
+                            }
+                        }
+                    }
                 })
-                .then(async (currentPost) => {
-                    await currentPost.save();
-                })
-                .then(() => {
-                    res.redirect(`/post/${id}`);
+                .then((post) => {
+                    res.redirect(`/post/${post._id}`);
                 })
                 .catch(() => {
                     res.redirect('/');
                 })
         }
-        else{
+        else {
             message = 'Login to proceed.';
             console.log('Login to proceed.');
             res.redirect('/login');

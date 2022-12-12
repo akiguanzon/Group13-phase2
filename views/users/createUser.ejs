@@ -20,19 +20,16 @@
         <p class="misc">Please fill in information to create an account.</p>
         <form class="row" action="/signup" method="post">
             <div class="col">
-                <input type="text" class="form-control" placeholder="First name">
+                <input type="text" class="form-control" placeholder="First name" required>
             </div>
             <div class="col">
-                <input type="text" class="form-control" placeholder="Last name">
+                <input type="text" class="form-control" placeholder="Last name" required>
             </div>
             <div class="col-12">
-                <input type="text" class="form-control" placeholder="Username" name="username">
+                <input type="text" class="form-control" placeholder="Username" name="username" required>
             </div>
             <div class="col-12">
-                <input type="text" class="form-control" placeholder="E-mail">
-            </div>
-            <div class="col-12">
-                <input type="text" class="form-control" placeholder="Password" name="password">
+                <input type="text" class="form-control" placeholder="Password" name="password" required>
             </div>
             <div class="sub-container">
                 <input type="submit" name="registerButton" value="Register" class="button">
