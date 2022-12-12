@@ -1,7 +1,7 @@
 # Group13-phase2
 
 Members:
-Marco Luis Gonzales
+Marco Luis Gonzalez
 Carlos Antonio Guanzon
 Winnie Silva He
 
