@@ -8,7 +8,7 @@ const session = require('express-session');
 const methodOverride = require('method-override');
 const path = require('path');
 
-mongoose.connect('mongodb://localhost:27017/group13DB', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://group13DB:group13DB@group13db.canhgfz.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('MONGO CONNECTION OPEN!!!')
     })
