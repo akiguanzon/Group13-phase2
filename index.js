@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 const routes = require('./routes/route.js')
-const session = require('express-session');
+var session = require('cookie-session');
 
 const methodOverride = require('method-override');
 const path = require('path');
