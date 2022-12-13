@@ -1,14 +1,27 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
 const routes = require('./routes/route.js')
-var session = require('cookie-session');
+
+if (process.env.STATUS === 'development') {
+    var session = require('express-session');
+
+}
+else {
+    var session = require('cookie-session');
+}
+
 
 const methodOverride = require('method-override');
 const path = require('path');
 
-mongoose.connect('mongodb+srv://group13DB:group13DB@group13db.canhgfz.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+process.env.STATUS === 'development'
+    ? (db_port = process.env.dev_DB)
+    : (db_post = process.env.prod_DB)
+
+mongoose.connect(db_port, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('MONGO CONNECTION OPEN!!!')
     })
@@ -18,10 +31,15 @@ mongoose.connect('mongodb+srv://group13DB:group13DB@group13db.canhgfz.mongodb.ne
     })
 
 app.use(session({
-  secret: 'socialNetCCAPDEVMCO',
-  resave: false,
-  saveUninitialized: false
+    secret: process.env.secret,
+    resave: false,
+    saveUninitialized: false
 }));
+
+app.use(function (req, res, next) {
+    res.locals.loggedin = req.session.username;
+    next();
+});
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
