@@ -19,7 +19,7 @@ const path = require('path');
 
 process.env.STATUS === 'development'
     ? (db_port = process.env.dev_DB)
-    : (db_post = process.env.prod_DB)
+    : (db_port = process.env.prod_DB)
 
 mongoose.connect(db_port, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
