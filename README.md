@@ -1,6 +1,6 @@
 # Social-Net
 
-About: Social-Net is a social media web application that allows users to post articles or websites they find interesting. Other users will be able to view these posts and will also be able to leave likes and comments. To ensure a personalized experience, users will also be able to edit their profile pages to their liking. This project is made with NodeJS, and uses MongoDB to store data.
+Social-Net is a social media web application that allows users to post articles or websites they find interesting. Other users will be able to view these posts and will also be able to leave likes and comments. To ensure a personalized experience, users will also be able to edit their profile pages to their liking. This project is made with NodeJS, and uses MongoDB to store data.
 
 Members:
 Marco Luis Gonzalez
